@@ -16,12 +16,16 @@ const moviesApi = axios.create({
 
 interface MoviesResponse {
   results: Movie[];
+  total_pages: number;
 }
 
-export async function fetchMovies(query: string): Promise<Movie[]> {
+export async function fetchMovies(
+  query: string,
+  page: number = 1
+): Promise<MoviesResponse> {
   const { data } = await moviesApi.get<MoviesResponse>('/search/movie', {
-    params: { query },
+    params: { query, page },
   });
 
-  return data.results;
+  return data;
 }
